@@ -15,6 +15,8 @@ import { HttpClient } from "@angular/common/http";
 })
 export class AppComponent implements OnInit {
     loadedPosts :Post[] =[];
+    error=null;
+    
   
     constructor(private postService:PostService,private http:HttpClient) {}
   
@@ -27,10 +29,16 @@ export class AppComponent implements OnInit {
     }
   
     onFetchPosts() {
-this.postService.fetchPost().subscribe((data)=>{
+this.postService.fetchPost().subscribe(data=>{
   this.loadedPosts=data
-})
-    }
+},error =>{
+  this.error=error.message("An error occured")
+}
+
+)
+}
+
+
   
     onClearPosts() {
       // Send Http request
