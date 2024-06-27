@@ -1,29 +1,28 @@
 import { NgFor, NgIf } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { Post } from "./post.model";
+import { PostService } from "./post.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
     selector:'app-comp',
     templateUrl:'./app.component.html',
     styleUrl:'./app.component.css',
     standalone:true,
-    imports:[FormsModule,HttpClientModule,NgFor,NgIf]
+    imports:[FormsModule,NgFor,NgIf]
 })
 export class AppComponent implements OnInit {
     loadedPosts :Post[] =[];
   
-    constructor(private http: HttpClient) {}
+    constructor(private postService:PostService,private http:HttpClient) {}
   
     ngOnInit() {}
   
     onCreatePost(postData: Post) {
       // Send Http request
-      this.http.post('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json',postData).subscribe((data:any)=>{
-        console.log(postData);
-      })
+      this.postService.createStorePost(postData)
     
     }
   
