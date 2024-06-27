@@ -34,5 +34,9 @@ this.postService.fetchPost().subscribe((data)=>{
   
     onClearPosts() {
       // Send Http request
+      this.postService.deletePosts().subscribe((data)=>{
+        this.loadedPosts=[]
+      })
+    
     }
 }

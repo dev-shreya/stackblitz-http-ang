@@ -31,4 +31,7 @@ fetchPost(){
     }))
     
 }
+deletePosts(){
+  return this.http.delete('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json')
+}
 }
