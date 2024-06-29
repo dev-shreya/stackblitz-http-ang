@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { catchError, map } from "rxjs/operators";
@@ -22,7 +22,11 @@ createStorePost(postData:{title:string,content:string}){
 
 }
 fetchPost(){
-    return this.http.get<{ [key: string]: Post }>('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json')
+    return this.http.get<{ [key: string]: Post }>('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json',{
+      headers:new HttpHeaders({'Custom-header':"This is custom header added to GET"}),
+      params: new HttpParams().set('print','pretty')
+  
+    })
     .pipe(map((response) => {
       const postArray: Post[] = [];
       for(const key in response){
