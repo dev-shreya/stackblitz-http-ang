@@ -15,12 +15,16 @@ import { HttpClient } from "@angular/common/http";
 })
 export class AppComponent implements OnInit {
     loadedPosts :Post[] =[];
-    error=null;
+    error:any;
     
   
     constructor(private postService:PostService,private http:HttpClient) {}
   
-    ngOnInit() {}
+    ngOnInit() {
+      this.postService.error.subscribe(errorMessage=>{
+        this.error=errorMessage.toString();
+      })
+    }
   
     onCreatePost(postData: Post) {
       // Send Http request
