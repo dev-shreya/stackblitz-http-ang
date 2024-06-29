@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { Subject, throwError } from "rxjs";
 
 @Injectable({
@@ -47,6 +47,11 @@ fetchPost(){
     
 }
 deletePosts(){
-  return this.http.delete('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json')
+  return this.http.delete('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json',{
+    observe:'events'
+  }
+  ).pipe(tap(events =>{
+    console.log(events)
+  }))
 }
 }
