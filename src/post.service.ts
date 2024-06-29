@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { catchError, map, tap } from "rxjs/operators";
@@ -52,6 +52,9 @@ deletePosts(){
   }
   ).pipe(tap(events =>{
     console.log(events)
+    if(events.type === HttpEventType.Response){
+      console.log(events.body)
+    }
   }))
 }
 }
