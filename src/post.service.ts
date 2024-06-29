@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
-import { map } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { Subject, throwError } from "rxjs";
 
 @Injectable({
     providedIn:'root'
@@ -32,7 +32,12 @@ fetchPost(){
        
       }
        return postArray;
-    }))
+    }),
+    catchError(errorRes=>{
+      const errorMessage = 'An error occurred while fetching posts.';
+      return throwError(() => new Error(errorMessage)); 
+    })
+    )
     
 }
 deletePosts(){
