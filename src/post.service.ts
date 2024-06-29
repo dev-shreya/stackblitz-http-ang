@@ -14,7 +14,9 @@ export class PostService{
 
     }
 createStorePost(postData:{title:string,content:string}){
-    this.http.post('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json',postData).subscribe((postData)=>{
+    this.http.post('https://ng-http-starter-c803d-default-rtdb.firebaseio.com/posts.json',postData,{
+      observe:'response'
+    }).subscribe((postData)=>{
         console.log("posted data:",postData)
     }), (_error: any) =>{
       this.error.next(_error.message)
