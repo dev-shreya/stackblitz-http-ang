@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
 
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { AuthInterceptorService } from './auth.interceptors';
 
 
 @Component({
@@ -20,5 +21,10 @@ export class App {
 
 bootstrapApplication(App, {
   providers: [
-    provideHttpClient()
+    provideHttpClient(withInterceptorsFromDi(),),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+  }
   ]});
